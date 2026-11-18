@@ -13,12 +13,14 @@ Lists of things a key keeps: mutes, pins, bookmarks, relays, interests, follow s
 | `10005` | Public chats | `e` (kind `40`) |
 | `10006` | Blocked relays | `relay` |
 | `10007` | Search relays | `relay` |
+| `10008` | Profile badges | Definition and award `a`/`e` pairs, or `a` for a badge set (see [NIP-58](nip-58.md)) |
 | `10009` | Simple groups | `group`, `r` |
 | `10015` | Interests | `t`, `a` |
 | `30000` | Follow set | `p` |
 | `30002` | Relay set | `relay` |
 | `30003` | Bookmark set | `e`, `a` |
 | `30004` | Curation set | `e`, `a` |
+| `30008` | Badge set | Definition and award `a`/`e` pairs (see [NIP-58](nip-58.md)) |
 
 `100xx` lists are replaceable (one per key). `300xx` are sets: addressable, with a `d` tag and
 optional `title`, `description` and `image` tags.

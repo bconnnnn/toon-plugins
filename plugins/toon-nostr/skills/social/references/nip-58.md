@@ -8,8 +8,10 @@ A badge is defined by an issuer, awarded to keys, and shown by the keys that wea
   `["description","..."]`, `["image","<url>","<width>x<height>"]`, optional `["thumb","<url>"]`.
 - `8` badge award, by the issuer, immutable. Tags: `["a","30009:<issuer>:<badge id>"]` and one
   `["p","<awardee>"]` per awardee. `content` is empty.
-- `30008` profile badges, addressable, `d` is `profile_badges`. Pairs of tags, in order:
+- `10008` profile badges, replaceable, one list per key. Pairs of tags, in order:
   `["a","30009:<issuer>:<badge id>"]` then `["e","<award id>"]`.
+- `30008` badge set, addressable by its `d` tag. A set groups the same definition and award
+  pairs. Include a set in the profile list with `["a","30008:<wearer>:<set id>"]`.
 
 ## Publish
 
@@ -27,15 +29,20 @@ and
 
 Wear a badge you were awarded (the awardee):
 
-- **kind** `30008`
+- **kind** `10008`
 - **content** empty
-- **tags** `[["d","profile_badges"],["a","30009:<issuer>:early-reader"],["e","<award id>"]]`
+- **tags** `[["a","30009:<issuer>:early-reader"],["e","<award id>"]]`
 
 ## Read
 
 ```json
 {"kinds":[8],"#p":["<key>"]}
-{"kinds":[30008],"authors":["<key>"],"#d":["profile_badges"]}
+```
+
+Read the badges that key displays:
+
+```json
+{"kinds":[10008],"authors":["<key>"]}
 ```
 
 A badge counts only if the award's `a` tag names a definition by the same issuer, and the `p` tag
@@ -43,6 +50,8 @@ names the wearer.
 
 ## Notes
 
-- Replacing kind `30008` drops the badges you leave out: send the whole list.
+- Replacing kind `10008` drops the badges and sets you leave out: send the whole list.
 - Do not award a badge for payment you cannot show; an award is public and cannot be silently taken back
   except by a deletion request (`nip-09.md`).
+
+[NIP-58 defines the event kinds and tag order.](https://github.com/nostr-protocol/nips/blob/999f9bfbf5fe00d5c2711fd24badb4e56748c9bc/58.md)
